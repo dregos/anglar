@@ -35,7 +35,12 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      return Contact::create([
+        'first_name' => request('first_name'),
+        'last_name' => request('last_name'),
+        'email' => request('email')
+      ]);
+
     }
 
     /**
@@ -46,7 +51,7 @@ class ContactsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Contact::findOrFail($id);
     }
 
     /**
@@ -69,7 +74,9 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->update($request->all());
+        return $contact;
     }
 
     /**
@@ -80,6 +87,9 @@ class ContactsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return $contact;
+
     }
 }
